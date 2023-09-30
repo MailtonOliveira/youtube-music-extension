@@ -1,12 +1,17 @@
 "use strict";
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.musicInfo) {
-        const musicInfoElement = document.getElementById("musicInfo");
-        if (musicInfoElement) {
-            musicInfoElement.innerHTML = `
-          <p>Music: ${message.musicInfo.title}</p>
-          <p>Artist: ${message.musicInfo.artist}</p>
-        `;
+        const albumCoverElement = document.getElementById("albumCover");
+        const titleElement = document.getElementById("title");
+        const artistElement = document.getElementById("artist");
+        if (albumCoverElement) {
+            albumCoverElement.style.backgroundImage = `url(${message.musicInfo.albumCoverUrl})`;
+        }
+        if (titleElement) {
+            titleElement.textContent = message.musicInfo.title;
+        }
+        if (artistElement) {
+            artistElement.textContent = message.musicInfo.artist;
         }
     }
 });

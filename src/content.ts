@@ -3,21 +3,24 @@
 interface MusicInfo {
   title: string;
   artist: string;
+  albumCoverUrl: string;
 }
 
 // Função para extrair as informações da música
 function extractMusicInfo(): MusicInfo {
   const titleElement = document.querySelector('.title.style-scope.ytmusic-player-bar');
   const artistElement = document.querySelector('.byline.style-scope.ytmusic-player-bar.complex-string');
+  const albumCoverElement = document.querySelector('#thumbnail img')
 
-  if (titleElement && artistElement) {
+  if (titleElement && artistElement && albumCoverElement) {
     const title = titleElement.textContent?.trim() || '';
     const artist = artistElement.querySelector('a')?.textContent?.trim() || '';
+    const albumCoverUrl = albumCoverElement.getAttribute('src') || '';
 
-    return { title, artist };
+    return { title, artist, albumCoverUrl };
   }
 
-  return { title: '', artist: '' };
+  return { title: '', artist: '', albumCoverUrl: '' };
 }
 
 
@@ -25,6 +28,7 @@ function extractMusicInfo(): MusicInfo {
 function executePeriodically() {
   const musicInfo = extractMusicInfo();  
   chrome.runtime.sendMessage({ musicInfo });
+
 }
 
 // Espera até que a página e todos os recursos estejam completamente carregados

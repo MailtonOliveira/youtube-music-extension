@@ -4,12 +4,14 @@
 function extractMusicInfo() {
     const titleElement = document.querySelector('.title.style-scope.ytmusic-player-bar');
     const artistElement = document.querySelector('.byline.style-scope.ytmusic-player-bar.complex-string');
-    if (titleElement && artistElement) {
+    const albumCoverElement = document.querySelector('#thumbnail img');
+    if (titleElement && artistElement && albumCoverElement) {
         const title = titleElement.textContent?.trim() || '';
         const artist = artistElement.querySelector('a')?.textContent?.trim() || '';
-        return { title, artist };
+        const albumCoverUrl = albumCoverElement.getAttribute('src') || '';
+        return { title, artist, albumCoverUrl };
     }
-    return { title: '', artist: '' };
+    return { title: '', artist: '', albumCoverUrl: '' };
 }
 // Função para executar a extração e envio das informações periodicamente
 function executePeriodically() {
